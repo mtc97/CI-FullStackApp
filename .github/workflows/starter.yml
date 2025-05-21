@@ -12,23 +12,23 @@ on:
 #Use a matrix strategy to use Node.js versions 16.x and 18.x
 jobs:
   build:
+
     runs-on: ubuntu-latest
-  
+
     strategy:
       matrix:
         node-version: [16.x, 18.x]
 
     steps:
       # Check out the code from the repository.
-      - name: checkout code
-        uses:  actions/checkout@v3
+      - uses: actions/checkout@v3
+
       # Set up a Node.js environment using the specified node version.
-      - name: Set up Node.js 
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-     # Install the dependencies.
+      # Install the dependencies.
       - run: cd backend && npm ci
 
       # Run the tests.
@@ -38,7 +38,7 @@ jobs:
       - run: cd backend && npm run lint
 
       # Send a console message at completion.
-    - run: |
+      - run: |
           echo "Hello ${{github.actor}}. You pushed to ${{github.repository}} at $(date)."
 
         
